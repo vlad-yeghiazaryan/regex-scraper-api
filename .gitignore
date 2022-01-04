@@ -1,0 +1,6 @@
+virtualenv
+client_secrets.json
+credentials.json
+regexScraper.zip
+.DS_Store
+__pycache__
