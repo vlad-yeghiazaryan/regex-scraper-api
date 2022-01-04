@@ -47,7 +47,7 @@ headers = {
 data = requests.post(api_url, data = json.dumps(payload), headers=headers)
 data.json()
 ```
-```json
+```javascript
 {'scraped_data': [{'date': '2022-01-04',
    'first': '10 Predictions for Web3 and the Cryptoeconomy for 2022',
    'second': 'Automate WhatsApp Messages with Python Instantly!',
