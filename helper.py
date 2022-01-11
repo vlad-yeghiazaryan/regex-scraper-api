@@ -7,7 +7,7 @@ urllib3.disable_warnings()
 
 # running scraper
 def scrape_page(urls, query_list):
-  pages = Scraper(urls, list(query_list.values()))
+  pages = Scraper(urls, list(query_list.values()), use_proxies=True)
   pages.scrape()
 
   # rename table columns

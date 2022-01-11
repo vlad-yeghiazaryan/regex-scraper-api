@@ -1,8 +1,9 @@
-# Main
+#  Main
 import numpy as np
 import pandas as pd
 import regex
 import time
+import random
 from datetime import datetime
 
 # Scraping
@@ -25,7 +26,8 @@ class Scraper(object):
         self.dateToday = datetime.today().strftime('%Y-%m-%d')
 
     def newProxy(self):
-        proxy = FreeProxy(country_id=['US', 'BR'],
+        random_country = random.choice(['US', 'RU', 'JP', 'HK', 'LB', 'FR', 'CA','DE', 'SG', 'HK'])
+        proxy = FreeProxy(country_id=random_country,
                           timeout=self.proxy_timeout, rand=True).get()
         proxyDict = {
             "http": proxy
@@ -34,24 +36,31 @@ class Scraper(object):
 
     def regex_search(self, query_list):
         def regex_page_search(page):
-            result = {'date':self.dateToday, 'url':page.url}
-            for query in query_list:
-                try:
-                    res = regex.search(query, str(page.content)).group(self.group_number)
-                except:
-                    res = np.NaN
-                result.update({query: res})
+            if page != None:
+                if page.ok:
+                    result = {'date':self.dateToday, 'url':page.url}
+                    for query in query_list:
+                        try:
+                            res = regex.search(query, str(page.content)).group(self.group_number)
+                        except:
+                            res = np.NaN
+                        result.update({query: res})
+            else:
+                result = {}
             return result
         return regex_page_search
 
     def getPage(self, url):
+        user_agent = random.choice(['Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36', 
+                      'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0'])
+        headers = {'User-Agent': user_agent}
         try:
             proxy = None
             if self.use_proxies:
                 proxy = self.newProxy()
-            page = requests.get(url, proxies=proxy)
+            page = requests.get(url, proxies=proxy, headers=headers)
             time.sleep(self.wait_time)
-            return page if page.ok else None
+            return page if page.ok else page
         except:
             return None
 

@@ -4,3 +4,6 @@ credentials.json
 regexScraper.zip
 .DS_Store
 __pycache__
+payload.txt
+mainCopy.py
+test.py
