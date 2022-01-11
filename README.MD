@@ -14,9 +14,6 @@ zip -r regexScraper.zip virtualenv __main__.py helper.py scraper.py
 ```bash
 ibmcloud fn action create regexScraper regexScraper.zip --kind python:3.7 --web true
 ```
-```bash
-ibmcloud fn action invoke regexScraper -r
-```
 This is the equivalent python dictionary representation of the payload. Make sure to convert it into a valid json before sending the request.
 ```python
 payload_sample = {"urls": ["https://medium.com"],
